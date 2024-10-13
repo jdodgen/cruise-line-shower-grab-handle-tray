@@ -1,4 +1,5 @@
 //   grand princess shower grab bar
+//  thus is for testing tray.scad
 
 postd = 20;
 total_height = 300-postd*2;
