@@ -9,7 +9,7 @@ use <rounded_loop.scad>;
 use <fillet.scad>;
 use <grand_princess_shower_grab_bar.scad>;  // for testing
 //
-//make_it();
+make_it();
 // typical stuff to change
 handle_d = 20+0.8;   // handle diameter + some clearance     
 center_bar_to_nut = center_bar_to_nut(); //  38;
@@ -274,7 +274,7 @@ module tray(tray_width=tray_width, lth=tray_lth, tray_height=tray_height, wall=t
 } 
     
 }
-make_it();
+// make_it();
 //drain_hole_driller(lth=72);
 module drain_hole_driller(lth=30)
 {
