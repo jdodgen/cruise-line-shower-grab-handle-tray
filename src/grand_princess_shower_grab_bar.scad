@@ -1,19 +1,19 @@
 //   grand princess shower grab bar
-//  thus is for testing tray.scad
 
 postd = 20;
 total_height = 300-postd*2;
 echo("total bar height",total_height);
-from_wall= 64;
+from_wall= 64 -(postd/2);
 big_plate = 70;
-big_plate_thickness = 15;
+big_plate_thickness = 7;  // measured this but it looks too thick: 15mm;
 nut= 33;
-nut_thickness = 27;
-echo("calculated bar to nut", 
-    from_wall-nut_thickness);
-outside_bar_to_nut = 48;
-center_bar_to_nut = outside_bar_to_nut - (postd/2);
-echo("measured center_bar_to_nut", center_bar_to_nut);
+outside_bar_to_nut = 40;
+nut_thickness = from_wall-outside_bar_to_nut; // again measured as 27mm;
+bar_to_nut = from_wall-nut_thickness;
+echo("calculated bar to nut", bar_to_nut);
+
+function center_bar_to_nut() = outside_bar_to_nut;
+echo("measured center_bar_to_nut", center_bar_to_nut());
 
 fudge=0; //-27;
 make_top_curve = false;
@@ -24,9 +24,9 @@ module make_handle()
     translate([0,0,postd])
     {
         bar();
-        translate ([-from_wall,0,-postd+fudge]) 
+        translate ([-from_wall,0,-postd]) 
             rotate([0,90,0])
-                    mount();
+                    cylinder(d= nut, h=nut_thickness, $fn = 15);;
     }
 }
 //translate([0,postd,0])bar();
@@ -54,7 +54,8 @@ module mount()
         union()
         {
             cylinder(d= big_plate, h=big_plate_thickness, $fn = 120);
-            cylinder(d= nut, h=nut_thickness, $fn = 20);
+            echo("mount nut_thickness", nut_thickness);
+            cylinder(d= nut, h=nut_thickness, $fn = 15);
         }
         cylinder(d=postd, h=total_height, $fn = 120);
     }
