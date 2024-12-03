@@ -14,8 +14,7 @@ module clip_loop(legs=4, base=1.8, y_scale=1.5, curved_end=false, rounded_end=fa
 	scale([1,1,y_scale]) 
 		round_loop(r=thick_enough_for_clip, lth=wide_enough_for_clip, base=base, legs=legs, curved_end=curved_end, rounded_end=rounded_end, $fn=80);
 }
-
-//round_loop(r=3, lth=8,legs=2, base=1, curved_end=true);
+round_loop(r=3, lth=8, legs=20, base=1.3, curved_end=false);
 module round_loop(r=20, lth=40, legs=20, base=1, curved_end=false, rounded_end=false, $fn=80) {
     translate([-lth/2,0,0])
     {

@@ -22,10 +22,10 @@ tray_type = "short"; // "short", "long" ,"soap", "test" (default render faster)
 //
 nut_clearance = 12;
 handle_d_outside = (center_bar_to_nut*2) - nut_clearance;
-scale_handle_d_outside = 0.40 ;  // squeeze ratio
+scale_handle_d_outside = 0.50 ;  // squeeze ratio
 echo("handle_d_outside", handle_d_outside);
-razer_legs = 20;
-razer_width = 24;
+razer_legs = 23;
+razer_width = 15;
 clamp_seperation = 50;   // space between post "clamps"
 top_clamp_thickness = 20;
 top_clamp_tab_lth = 8;
@@ -33,7 +33,7 @@ bottom_clamp_thickness = 60;
 top_clamp_clip_reduction_scale = 0.45;   // left side of cone only affeacting the clip
 
 inside_width = 72;
-tray_wall = 3;
+tray_wall = 4;
 tray_width = inside_width + tray_wall*2;  
 // tray_holes_columns = 5;  // change this if changing tray_width
 
@@ -41,7 +41,7 @@ tray_lth = tray_type == "long" ? 192:
     tray_type == "short" ? 120:
     tray_type == "soap" ? 85:30;
 
-tray_height = bottom_clamp_thickness;
+tray_height = tray_type == "soap" ? 15 : bottom_clamp_thickness;
 
 total_height = clamp_seperation+top_clamp_thickness+bottom_clamp_thickness;
 make_groove=true;
@@ -220,8 +220,8 @@ module tray(tray_width=tray_width, lth=tray_lth, tray_height=tray_height, wall=t
                         tray_height=tray_height, z_offset=0);
                     if (add_loop ==  true)
                     {
-                        translate([0,(lth/2)+25,tray_height-5])
-                            round_loop(r=3, base=1.8, lth=razer_width-7, 
+                        translate([0, (lth/2)+38, tray_height-5])
+                            round_loop(r=3, base=1.3, lth=razer_width, 
                                 legs=razer_legs, curved_end=false);
                     }
                     
