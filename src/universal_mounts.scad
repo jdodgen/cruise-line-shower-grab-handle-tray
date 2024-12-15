@@ -1,22 +1,23 @@
 /*
-cruise line shower "grab handle" tray
-MIT licence, copyright 2024 Jim Dodgen
-both:
-20mm shower grab handle on the "Grand Princess", Discovery Princess, as well as most others.
-royal class ships have a "shower head post" 25mm teed into 50mm round stub.
-they are all can be used right or left of the post and lock on as to not piviot
-The tray can be any lenght that you can print. It has a loop at the end for things like razors.
+cruise line shower "grab handle" mount 
+MIT license, copyright 2024 Jim Dodgen
 */
 use <fillet.scad>;
 use <dovetail.scad>;
 
 make_mount();
 
-// typical stuff to change
-vert_handle_d = 25+1; // 25+1;  // normal 20mm + 0.8 some 25mm + 1 
+// tested versions:
+// grab bar 20mm x 20mm with curved mount
+// shower head bar 25mm x 50mm tee mount
+
+// current vesion under test
+// curved shower head bar (wheelchair) 32.15mm x32.5mm
+//
+// typical stuff to change add clearance value
+vert_handle_d = 25+1; // 25+1; 
 horz_handle_d = 50+2; //50+2;
 curved_mount = horz_handle_d == vert_handle_d ? true : false; 
-
 //
 // Other things that are rarely changed
 //
@@ -53,7 +54,6 @@ module make_mount()
         {
             difference()
             {
-
                 handle_mount();
                 cut_off_upper_mount_half();
                 drill_post_hole();
@@ -71,7 +71,7 @@ module make_mount()
                cut_handle_curve();
                mirror([1,0,0])
                translate([-0,0,0])
-                cut_handle_curve();
+                    cut_handle_curve();
            }
         }
     }
@@ -166,32 +166,6 @@ module cut_handle_curve()
         }
     }
 }
-////mount_support();
-//module mount_support()
-//{
-//    base_y = 5;
-//    offset_y = -vert_handle_d/3;
-//    support_height = height_to_top_clamp;
-//    vert_x = vert_handle_d-6;
-//    x_side = 20;
-//    *translate([0,offset_y,base_y/2])
-//        cube([vert_handle_d_outside,horz_handle_d/2,base_y], center=true);
-//    translate([0,offset_y,height_to_top_clamp/2])
-//        cube([vert_x, horz_handle_d/2,support_height], center=true);
-//   translate([-x_side/2-vert_x/2, offset_y+10, support_height-horz_handle_d/4])
-//   {
-//        difference()
-//       {
-//            translate([6,0,-horz_handle_d/4])
-//                cylinder(d=horz_handle_d/2+5, h=horz_handle_d/2);
-//            //cube([x_side, horz_handle_d/2,horz_handle_d/2], center=true);
-//            rotate([45,0,0])
-//
-//           translate([0,0,-50]) cube([x_side,100,100], center=true);
-//       }
-//   }
-//
-//}
 
 // handle_mount();
 module handle_mount(vert_handle_d_outside=vert_handle_d_outside,
@@ -203,32 +177,32 @@ module handle_mount(vert_handle_d_outside=vert_handle_d_outside,
     {
         union()
         {
-        difference()
-        {
-        union()
+            difference()
             {
-                color("white") cylinder(d=vert_handle_d_outside,
-                    h=bottom_clamp_thickness, $fn=120);
+            union()
+                {
+                    color("white") cylinder(d=vert_handle_d_outside,
+                        h=bottom_clamp_thickness, $fn=120);
 
-                translate([0,0,bottom_clamp_thickness])
-                    color("green") cylinder(
-                            d1=mid_d_outside,
-                            d2=top_d_outside,
-                            h=total_height-bottom_clamp_thickness-curve_height,
-                            $fn=120);
-                translate([0,0,total_height-curve_height])
-                    scale([1,1,sphere_scale])
-                    sphere(d=top_d_outside, $fn=120);
-             }
-        center_cutout();
-     }
-        translate([0,0,bottom_clamp_thickness])
-            scale([1,1,sphere_scale])
-            sphere(d=vert_handle_d_outside, $fn=120);
-    }
-cut_off_lower_mount_half();
-}
-
+                    translate([0,0,bottom_clamp_thickness])
+                        color("green") cylinder(
+                                d1=mid_d_outside,
+                                d2=top_d_outside,
+                                h=total_height-bottom_clamp_thickness-
+                                        curve_height,
+                                $fn=120);
+                    translate([0,0,total_height-curve_height])
+                        scale([1,1,sphere_scale])
+                        sphere(d=top_d_outside, $fn=120);
+                }
+                center_cutout();
+            }
+            translate([0,0,bottom_clamp_thickness])
+                scale([1,1,sphere_scale])
+                sphere(d=vert_handle_d_outside, $fn=120);
+       }
+       cut_off_lower_mount_half();
+   }
 }
 
 //translate([0,0,0]) mount_dovetail();

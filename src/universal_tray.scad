@@ -30,13 +30,9 @@ tray_fillet_radius=4;
 
 filler_block_x=40;  // home of dovetail
 filler_block_y=15; 
-// dovetail varibles shared with universal_mount.scad 
-// CHANGE IN BOTH PLACES if you modify
+
 dove_base = 2;
 dove_mount_offset = 2;
-//dove_width = 15;
-//dove_clearance = 0.5;
-//dove_thickness = filler_block_y/2;
 // end of universal_mount.scad common numbers
 
 make_tray();
@@ -132,23 +128,6 @@ module tray_dovetail(width=filler_block_x,height=tray_height, round_corner_radiu
                         fillet(-90, fillet_radius, tray_height, $fn=80);
     }
 }
-
-// common dovetail a duplicate of this exists in universal_mounts.scad 
-// CHANGE IN BOTH PLACES
-//
-////dovetail(30,15,10,40);
-//module dovetail(max_width=11, min_width=5, depth=5, height=30) {
-//	linear_extrude(height=height, convexity=2)
-//		dovetail_2d(max_width,min_width,depth);
-//}
-//
-//module dovetail_2d(max_width=11, min_width=5, depth=5) {
-//	angle=atan((max_width/2-min_width/2)/depth);
-//	echo("angle: ", angle);
-//	polygon(paths=[[0,1,2,3,0]], points=[[-min_width/2,0], [-max_width/2,depth], 
-//        [max_width/2, depth], [min_width/2,0]]);
-//}
-//// end of common devetail
 
 //drain_slot_cutter();
 module drain_slot_cutter(lth=tray_lth)
