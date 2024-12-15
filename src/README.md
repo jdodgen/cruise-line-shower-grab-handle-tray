@@ -1,9 +1,18 @@
-openSCAD and stl source
+# openSCAD and stl source for a add-on tray for cruise line showers
 
-[universal_tray.scad](https://github.com/jdodgen/cruise-line-shower-grab-handle-tray/blob/main/src/universal_tray.scad) is the current version 
+Two scad files, the mounts and the trays.  
 
-Two configured versions:    
-20mm grab handle version with curved ends for mounting. Seen on most princess ships like "grand class"  
-25mm shower rod teed into a 50mm stud. Newer princess ships like "royal class"  
+currently mounts for:
+20mm virtical "grab bars" both grand and royal class ships
+25mm bar teed into 50mm stub that supports shower head mount royal class ships
+32.5mm curved base shower head mount (found in weelchair accessable showers) 
+
+customizable trays that use a dovetail mount to attach to various mounts.
+standard mounts:
+soap tray
+short tray
+long tray
+
+
 
 
