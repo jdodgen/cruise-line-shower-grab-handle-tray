@@ -5,19 +5,27 @@ MIT license, copyright 2024 Jim Dodgen
 use <fillet.scad>;
 use <dovetail.scad>;
 
+type = "32mm"; // "25mm" "32mm"
 make_mount();
 
-// tested versions:
-// grab bar 20mm x 20mm with curved mount
-// shower head bar 25mm x 50mm tee mount
+// versions:
+// list is: [vert_handle_d, horz_handle_d, curved mount true, base adjustment]
+20mmGrab =   [20+0.8,20+0.8,true,27]; // grab bar 20mm x 20mm with curved mount
+25x50mmShower = [25+1,50+2,false,23]; // shower head bar 25mm x 50mm tee mount
+32mmShower = [32.5+2, 32.5+2,true,33]; // curved shower head bar (wheelchair) cabin
 
-// current vesion under test
-// curved shower head bar (wheelchair) 32.15mm x32.5mm
+this_one = type ==  "20mm" ? 20mmGrab :
+           type ==  "25mm" ? 25x50mmShower :
+           type ==  "32mm" ? 32mmShower : false;
+           
+           
+        
 //
 // typical stuff to change add clearance value
-vert_handle_d = 25+1; // 25+1; 
-horz_handle_d = 50+2; //50+2;
-curved_mount = horz_handle_d == vert_handle_d ? true : false; 
+vert_handle_d = this_one[0]; 
+horz_handle_d = this_one[1];
+curved_mount = this_one[2];
+vert_handle_d_outside = horz_handle_d+this_one[3];  // horz is larger or equal, 2.
 //
 // Other things that are rarely changed
 //
@@ -30,13 +38,13 @@ center_cutout_height = total_height - top_clamp_thickness-bottom_clamp_thickness
 height_to_top_clamp = center_cutout_height+bottom_clamp_thickness;
 
 // 50 = 1.5 20 = 2.2 horz_handle_d
-vert_handle_d_outside = horz_handle_d+28;  // horz is larger or equal, 2.? is just a guess
+//vert_handle_d_outside = horz_handle_d+28;  // horz is larger or equal, 2.? is just a guess
 echo("horz_handle_d", horz_handle_d);
 echo("vert_handle_d_outside", vert_handle_d_outside);
 top_handle_mount_adj = 0.8; //0.8; 
 
 top_d_outside = vert_handle_d*1.4;
-mid_d_outside = top_d_outside*1.6;
+mid_d_outside = top_d_outside*1.4;
 echo("top_d_outside", top_d_outside);
 echo("mid_d_outside", mid_d_outside);
 
