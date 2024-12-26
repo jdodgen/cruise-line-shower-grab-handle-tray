@@ -2,7 +2,7 @@
 MIT licence, copyright 2024,2025 Jim Dodgen
 cruise line shower "grab handle" tray
 this is the tray part, universal_tray.scad look at universal_mount.scad for mounts 
-it is designed to hold items that do not fin on shevles in the shower. 
+it is designed to hold items that do not fit on shelves in the shower. 
 in it simplist form it is a soap tray with a hanger for a razer
 */
 use <rounded_loop.scad>;
