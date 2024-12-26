@@ -6,8 +6,18 @@ The accessory  stores things normally on the floor and it also has a place to
 It can be configured to change the size of the tray as well as if we find a grab handle that is not 20mm.   
 All/most variables are global and should be easy to customize.       
 
-## testing
-### First version tested on Grand Princess  October 2024   
-### Second version November 2024
-### Third version, added dovetail December 2024
+## mount versions
+###  20mm curved grab handle as found on the grand and discovery princess   
+###  25x50mm shower handle pole found on discovery princess
+### 32.5mm curved shower handle pole as found in discovery princess wheelchair cabins
+### easy to customize and add other mounts as they are found and measured
+
+## tray versions
+### soap dish
+### small bottle holder
+### large bottle holder
+### also easy to add other sizes
+
+
+
 
