@@ -2,7 +2,7 @@
 MIT licence, copyright 2024,2025 Jim Dodgen
 cruise line shower "grab handle" tray
 this is the tray part, universal_tray.scad look at universal_mount.scad for mounts 
-it is designed to hold items that do not fit on shelves in the shower. 
+it is designed to hold items that do not fit on shevles in the shower. 
 in it simplist form it is a soap tray with a hanger for a razer
 */
 use <rounded_loop.scad>;
@@ -67,10 +67,18 @@ module make_tray(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_heig
                         if (add_loop ==  true)
                         {
                             translate([0,(tray_lth/2)+35,tray_height-5])
-                                round_loop(r=3, base=1.8, lth=razer_width-7,
+                            {
+                                round_loop(r=3, base=1.8, 
+                                    lth=razer_width-7,
                                     legs=razer_legs, curved_end=false);
-                        }
-
+                            support_base_thickness = 0.5;
+                            translate([0,0,
+                                support_base_thickness/2-tray_height+5]) 
+                                color("purple")
+                                cube([52,30,support_base_thickness], 
+                                    center=true);
+                            }
+                         }
                     }
                     translate([-150,0,tray_height]) // trim top of tray
                         cube([300,300,100]);
@@ -89,7 +97,8 @@ module make_tray(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_heig
                 } // end inner diff
                  // this is the attachment to the handle_mount
 
-                translate([-filler_block_x/2,-tray_lth/2-filler_block_y,0])
+                translate([-filler_block_x/2,-tray_lth/2-filler_block_y,
+                            0])
                     tray_dovetail();
                 // inside corners
                 translate([-tray_width/2+wall/2,-tray_lth/2+wall/2,
@@ -108,9 +117,6 @@ module make_tray(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_heig
                     fillet(90, tray_fillet_radius, tray_height, $fn=40);
         }
     }
-    support_base_thickness = 0.5;
-    translate([0,tray_lth-7,support_base_thickness/2]) 
-        cube([52,30,support_base_thickness], center=true);
     if (tray_ribs == true)
     {
         drain_slot_bumps(lth=tray_lth);
