@@ -4,22 +4,19 @@ MIT license, copyright 2024 Jim Dodgen
 */
 use <fillet.scad>;
 use <dovetail.scad>;
-
-type = "32mm"; // "25mm" "32mm"
+type = "20mm"; // "25mm" "32mm"
 make_mount();
 
-// versions:
-// list is: [vert_handle_d, horz_handle_d, curved mount true, base adjustment]
-20mmGrab =   [20+0.8,20+0.8,true,27]; // grab bar 20mm x 20mm with curved mount
-25x50mmShower = [25+1,50+2,false,23]; // shower head bar 25mm x 50mm tee mount
-32mmShower = [32.5+2, 32.5+2,true,33]; // curved shower head bar (wheelchair) cabin
+// tested versions:
+// list is: [vert_handle_d, horz_handle_d, curved mount true, base adjustment, bottom_clamp_thickness]
+20mmGrab =   [20+0.8,20+0.8,true,27,35]; // grab bar 20mm x 20mm with curved mount
+25x50mmShower = [25+1,50+2,false,23,30]; // shower head bar 25mm x 50mm tee mount
+32mmShower = [32.5+2, 32.5+2,true,33,60]; // curved shower head bar (wheelchair) cabin
 
 this_one = type ==  "20mm" ? 20mmGrab :
            type ==  "25mm" ? 25x50mmShower :
            type ==  "32mm" ? 32mmShower : false;
-           
-           
-        
+                
 //
 // typical stuff to change add clearance value
 vert_handle_d = this_one[0]; 
@@ -32,7 +29,7 @@ vert_handle_d_outside = horz_handle_d+this_one[3];  // horz is larger or equal, 
 clamp_seperation = 50;   // space between post "clamps"
 top_clamp_thickness = 20;
 top_clamp_tab_lth = 8;
-bottom_clamp_thickness = 30;
+bottom_clamp_thickness = this_one[4];
 total_height = clamp_seperation+top_clamp_thickness+bottom_clamp_thickness;
 center_cutout_height = total_height - top_clamp_thickness-bottom_clamp_thickness;
 height_to_top_clamp = center_cutout_height+bottom_clamp_thickness;
@@ -48,7 +45,7 @@ mid_d_outside = top_d_outside*1.4;
 echo("top_d_outside", top_d_outside);
 echo("mid_d_outside", mid_d_outside);
 
-curve_offset = bottom_clamp_thickness*0.3; //*.4;
+curve_offset = bottom_clamp_thickness*0.4; //*.4;
 dove_base = 2;  // keeps tray from falling
 dove_mount_offset = 2; // adds some material between horz part
 //
@@ -150,7 +147,7 @@ module cut_handle_curve()
             union()
             {
             color("orange")
-            translate([-x, 0, vert_handle_d/2])
+            translate([-x, 0, vert_handle_d/4])
                 rotate([-90,90,0])
                     rotate_extrude(convexity = 10,angle=-90, $fn = 120)
                         translate([x, 0, 0])
