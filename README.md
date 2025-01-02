@@ -1,22 +1,33 @@
-# cruise-line-shower-grab-handle-tray
-This is a openSCAD design to create an accessory that attaches to the grab handle in the shower.
-The accessory holds stuff that is left on the floor or not fitting on the shelf, like shampoo or razor. 
+# Shower grab handle tray
+This is a [openSCAD](https://openscad.org/) design to create an accessory that attaches to the grab handle in the cruise ship shower.
 
-The accessory  stores things normally on the floor and it also has a place to hang a female razor.   
-It can be configured to change the size of the tray as well as if we find a grab handle that is not 20mm.   
-All/most variables are global and should be easy to customize.       
+The tray stores things normally on the floor and it also has a place to hang a female razor.   
+The code defines scad lists for mount and tray additions as I add them
 
-## mount versions
-###  20mm curved grab handle as found on the grand and discovery princess   
-###  25x50mm shower handle pole found on discovery princess
-### 32.5mm curved shower handle pole as found in discovery princess wheelchair cabins
-### easy to customize and add other mounts as they are found and measured
+All/most variables are global and should be easy to customize. 
 
-## tray versions
-### soap dish
-### small bottle holder
-### large bottle holder
-### also easy to add other sizes
+There are two scad files one for generating [tray](src/universal_tray.scad)s the other for the [mount](src/universal_mounts.scad) part. 
+They are interconnected with a shared [dovetail](src/dovetail.scad). 
+
+### current mount stl files
+#### [20mm](/src/stl/20mm_mount.stl) grabhandle
+As found on Grand Princess and Discovery Princess   
+I expect it is a pretty standard grab handle.
+####  [25x50mm](/src/stl/25mm_mount.stl) shower handle pole 
+As found on Discovery Princess 
+#### [32.5mm](/src/stl/32mm_mount.stl) curved shower handle pole
+as found on Discovery Princess wheelchair cabins
+#### easy to customize
+and add other mounts as they are measured
+
+### current tray versions
+#### [soap dish](src/stl/tray_short.stl)
+ridges to help soap dry
+#### [small holder](/src/stl/tray_small.stl)
+Holds small/travel bottles of products
+#### [large holder](/src/stl/tray_large.stl)
+This needes a large printer
+#### also easy to add other sizes
 
 
 
