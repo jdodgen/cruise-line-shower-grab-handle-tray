@@ -4,14 +4,28 @@ MIT license, copyright 2024 Jim Dodgen
 */
 use <fillet.scad>;
 use <dovetail.scad>;
-type = "20mm"; // "25mm" "32mm"
+type = "20mm"; // "20mm" "25mm" "32mm"
 make_mount();
 
-// tested versions:
-// list is: [vert_handle_d, horz_handle_d, curved mount true, base adjustment, bottom_clamp_thickness]
-20mmGrab =   [20+0.8,20+0.8,true,27,35]; // grab bar 20mm x 20mm with curved mount
-25x50mmShower = [25+1,50+2,false,23,30]; // shower head bar 25mm x 50mm tee mount
-32mmShower = [32.5+2, 32.5+2,true,33,60]; // curved shower head bar (wheelchair) cabin
+//clamp_seperation needs to be at least vert_handle_d+clearance
+/* version list is:[
+        0   vert_handle_d, // note: add a clearance value
+        1   horz_handle_d, 
+        2   curved mount // true/false, 
+        3   base adjustment, 
+        4   bottom_clamp_thickness,
+        5   clamp_seperation,
+        6   dovetail_height_factor  // used to shoren it
+            ]
+*/
+            
+// tested version lists:
+// grab bar 20mm x 20mm with curved mount
+20mmGrab =   [20+0.8, 20+0.8, true, 27, 35, 22, 1]; 
+// shower head bar 25mm x 50mm tee mount
+25x50mmShower = [25+1, 50+2, false,   30, 40, 30, 0.8];
+// curved shower head bar (wheelchair) cabin
+32mmShower = [32.5+2, 32.5+2,true,33,60,40, 0.8]; 
 
 this_one = type ==  "20mm" ? 20mmGrab :
            type ==  "25mm" ? 25x50mmShower :
@@ -23,14 +37,17 @@ vert_handle_d = this_one[0];
 horz_handle_d = this_one[1];
 curved_mount = this_one[2];
 vert_handle_d_outside = horz_handle_d+this_one[3];  // horz is larger or equal, 2.
+
+clamp_seperation = this_one[5];   // space between post "clamps"
 //
 // Other things that are rarely changed
 //
-clamp_seperation = 50;   // space between post "clamps"
-top_clamp_thickness = 20;
+lower_dome_height = 6;
+top_clamp_thickness = 8;
 top_clamp_tab_lth = 8;
 bottom_clamp_thickness = this_one[4];
-total_height = clamp_seperation+top_clamp_thickness+bottom_clamp_thickness;
+dovetail_height_factor = this_one[6];
+total_height = clamp_seperation+lower_dome_height+top_clamp_thickness+bottom_clamp_thickness;
 center_cutout_height = total_height - top_clamp_thickness-bottom_clamp_thickness;
 height_to_top_clamp = center_cutout_height+bottom_clamp_thickness;
 
@@ -41,7 +58,7 @@ echo("vert_handle_d_outside", vert_handle_d_outside);
 top_handle_mount_adj = 0.8; //0.8; 
 
 top_d_outside = vert_handle_d*1.4;
-mid_d_outside = top_d_outside*1.4;
+mid_d_outside = top_d_outside*1.2;
 echo("top_d_outside", top_d_outside);
 echo("mid_d_outside", mid_d_outside);
 
@@ -98,13 +115,14 @@ module cut_off_lower_mount_half()
         cube([vert_handle_d, height_to_top_clamp, height_to_top_clamp],
             center=true);
 }
-
+// cut_off_upper_mount_half();
 module cut_off_upper_mount_half()
 {
     block_size = 100;
+    cutout_height = top_clamp_thickness*3;
     translate([0, block_size/2,
-                (total_height-top_clamp_thickness/2)])
-        cube([vert_handle_d, block_size, top_clamp_thickness],
+                (total_height)])
+        cube([vert_handle_d, block_size, cutout_height],
                         center=true);
 }
 //color("red") center_cutout();
@@ -174,37 +192,49 @@ module cut_handle_curve()
 
 // handle_mount();
 module handle_mount(vert_handle_d_outside=vert_handle_d_outside,
-        top_d_outside=top_d_outside, total_height=total_height,sphere_scale=0.3)
+        top_d_outside=top_d_outside, total_height=total_height,sphere_scale=0.3,bottom_clamp_thickness=bottom_clamp_thickness, vert_handle_d=vert_handle_d)
 {
+    // three parts
+    //
+    bottom_h = vert_handle_d*0.8;
+    mid_h = bottom_clamp_thickness -  bottom_h;
+    top_h = total_height - bottom_clamp_thickness;
     // scale([1,scale_vert_handle_d_outside,1])
     curve_height = top_d_outside*sphere_scale;
+    
     difference()
     {
         union()
         {
             difference()
             {
-            union()
-                {
-                    color("white") cylinder(d=vert_handle_d_outside,
-                        h=bottom_clamp_thickness, $fn=120);
-
-                    translate([0,0,bottom_clamp_thickness])
-                        color("green") cylinder(
-                                d1=mid_d_outside,
-                                d2=top_d_outside,
-                                h=total_height-bottom_clamp_thickness-
-                                        curve_height,
-                                $fn=120);
-                    translate([0,0,total_height-curve_height])
-                        scale([1,1,sphere_scale])
-                        sphere(d=top_d_outside, $fn=120);
-                }
+                union()
+                    {
+                        
+                        
+                        color("white") cylinder(d=vert_handle_d_outside,
+                            h=bottom_h, $fn=120);
+                        translate([0,0,bottom_h])
+                            color("purple") cylinder(
+                                    d1=vert_handle_d_outside,
+                                    d2=mid_d_outside,
+                                    h=mid_h,
+                                    $fn=120);
+                        translate([0,0,bottom_clamp_thickness])
+                            color("orange") cylinder(
+                                    d1=mid_d_outside,
+                                    d2=top_d_outside,
+                                    h=top_h,
+                                    $fn=120);
+                        translate([0,0,total_height])
+                            scale([1,1,sphere_scale])
+                            sphere(d=top_d_outside, $fn=120);
+                    }
                 center_cutout();
             }
             translate([0,0,bottom_clamp_thickness])
                 scale([1,1,sphere_scale])
-                sphere(d=vert_handle_d_outside, $fn=120);
+                sphere(d=mid_d_outside, $fn=120);
        }
        cut_off_lower_mount_half();
    }
@@ -215,5 +245,5 @@ module mount_dovetail()
 {
     translate([0,dove_mount_offset+horz_handle_d/2,0])
     color("blue")
-        dovetail(height=bottom_clamp_thickness);
+        dovetail(height=bottom_clamp_thickness*dovetail_height_factor);
 }
