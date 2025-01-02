@@ -29,6 +29,38 @@ Holds small/travel bottles of products
 This needes a large printer
 #### also easy to add other sizes
 
+## Prototype history/log
+first version test.        
+A single part.
+Handle diameter was estimated. it fit loose and required electrical tape to make it work. took mesurements.
+
+second version test.     
+Still a single part.
+Nice fit on the pole but the base is too wide and had to be cut to fit. Razer did not fit. took measurments.
+
+third version test.      
+Still a single part.
+Version fits nice. A little leaning due to "curve" elongating the lower clamp.
+This ship has more places for storage and the shower is on a 25mm pole on a 50mm pole.
+
+forth version test.    
+two mounts: 20mm and 25x50mm. two trays a "small" and a "soap"   
+mount 20mm with "soap" tray   
+mount 25x50mm with "small" tray   
+All worked fine noticed that trays could be adjusted about 2 degrees up they would level out. Soap dish worked fine but needs ribs for drying.
+
+current version changes (1-JAN-2025).       
+curve elongation problem is fixed by making lower clamp height changeable.    
+Rounded sharp corners on the dovetail.    
+Trays now are tilted up 2 degrees to level them out.    
+Mount now uses less fillament and is more cone shaped.   
+"soap" now has ridges between the slots.    
+
+
+
+
+
+
 
 
 
