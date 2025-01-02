@@ -9,15 +9,15 @@ use <rounded_loop.scad>;
 use <fillet.scad>;
 use <dovetail.scad>;
 //
-tray_type = "soap"; // "short", "long" ,"soap", "test"
+tray_type = "long"; // "short", "long" ,"soap", "test"
 
 add_loop = true;  // women like this for a razor
 drain_holes = true;  // testing set to false
 // tilt_up_angle is a value in degrees to level the tray a bit in the mount
 // tray_parms = [lenght, height, ribs, tilt_up_angle] 
-soap_tray = [85, 17, true,-2]; 
-short_tray = [120, 35, false,-2];
-long_tray = [192, 35, false,-2];
+soap_tray = [85, 20, true,-2]; 
+short_tray = [130, 40, false,-2];
+long_tray = [192, 40, false,-2];
 
 tray_parms = 
     tray_type == "soap" ? soap_tray :
@@ -71,7 +71,7 @@ module make_tray(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_heig
                                 round_loop(r=3, base=1.8, 
                                     lth=razer_width-7,
                                     legs=razer_legs, curved_end=false);
-                            support_base_thickness = 0.5;
+                            support_base_thickness = 1;
                             translate([0,0,
                                 support_base_thickness/2-tray_height+5]) 
                                 color("purple")
@@ -182,7 +182,7 @@ module drain_slot_cutter(lth=tray_lth)
 module drain_slot_bumps(lth=tray_lth)
 {
     rows = tray_lth/12-1;
-    bump_d = 4;
+    bump_d = 6.1;
     bump_width = tray_width;
     cols = round(inside_width/(drain_offset+(bump_d/2)));
     echo("raw bumps", cols);
@@ -191,7 +191,7 @@ module drain_slot_bumps(lth=tray_lth)
     echo("calculated bumps columns", columns);
     for (y =[1:rows])
     {
-        translate([-bump_width/2, -(lth/2.55)+drain_offset*y, bump_d/2])
+        translate([-bump_width/2, -(lth/2.54)+drain_offset*y, bump_d/2])
         rotate([0,90,0])    
         difference()
             {  
