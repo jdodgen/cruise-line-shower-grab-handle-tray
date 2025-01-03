@@ -1,10 +1,10 @@
 /*
 cruise line shower "grab handle" mount 
-MIT license, copyright 2024 Jim Dodgen
+MIT license, copyright 2024, 2025 Jim Dodgen
 */
 use <fillet.scad>;
 use <dovetail.scad>;
-type = "20mm"; // "20mm" "25mm" "32mm"
+mount_type = "25mm"; // "20mm" "25mm" "32mm"
 make_mount();
 
 //clamp_seperation needs to be at least vert_handle_d+clearance
@@ -12,36 +12,34 @@ make_mount();
         0   vert_handle_d, // note: add a clearance value
         1   horz_handle_d, 
         2   curved mount // true/false, 
-        3   base adjustment, 
+        3   base_diameter_adjustment,
         4   bottom_clamp_thickness,
         5   clamp_seperation,
         6   dovetail_height_factor  // used to shoren it
             ]
 */
             
-// tested version lists:
-// grab bar 20mm x 20mm with curved mount
-20mmGrab =   [20+0.8, 20+0.8, true, 27, 35, 22, 1]; 
-// shower head bar 25mm x 50mm tee mount
-25x50mmShower = [25+1, 50+2, false,   30, 40, 30, 0.8];
-// curved shower head bar (wheelchair) cabin
-32mmShower = [32.5+2, 32.5+2,true,33,60,40, 0.8]; 
+// current mounts:
+20mmGrab =      [20+0.8, 20+0.8, true,  27, 35, 22, 1.0]; // grab bar 20mm x 20mm with curved mount
+25x50mmShower = [25+1,     50+2, false, 20, 30, 28, 0.8]; // shower head bar 25mm x 50mm tee mount
+32mmShower =    [32.5+2, 32.5+2, true,  33, 60, 40, 0.8]; // curved shower head bar (wheelchair) cabin
 
-this_one = type ==  "20mm" ? 20mmGrab :
-           type ==  "25mm" ? 25x50mmShower :
-           type ==  "32mm" ? 32mmShower : false;
+this_one = mount_type ==  "20mm" ? 20mmGrab :
+           mount_type ==  "25mm" ? 25x50mmShower :
+           mount_type ==  "32mm" ? 32mmShower : false;
                 
-//
-// typical stuff to change add clearance value
-vert_handle_d = this_one[0]; 
-horz_handle_d = this_one[1];
-curved_mount = this_one[2];
-vert_handle_d_outside = horz_handle_d+this_one[3];  // horz is larger or equal, 2.
+vert_handle_d =            this_one[0]; 
+horz_handle_d =            this_one[1];
+curved_mount =             this_one[2];
+base_diameter_adjustment = this_one[3]; 
+bottom_clamp_thickness =   this_one[4];
+clamp_seperation =         this_one[5];
+dovetail_height_factor =   this_one[6];
 
-clamp_seperation = this_one[5];   // space between post "clamps"
 //
 // Other things that are rarely changed
 //
+vert_handle_d_outside = horz_handle_d+base_diameter_adjustment;
 lower_dome_height = 6;
 top_clamp_thickness = 8;
 top_clamp_tab_lth = 8;
@@ -73,31 +71,39 @@ module make_mount()
     difference()
     {
         union()
-        {
+        {         
             difference()
             {
-                handle_mount();
-                cut_off_upper_mount_half();
-                drill_post_hole();
-                cutoff_dove_mount();
+                union()
+                {
+                    difference()
+                    {
+                        handle_mount();
+                        cut_off_upper_mount_half();
+                        drill_post_hole();
+                        cutoff_dove_mount();
+                    }
+                }
+                if (curved_mount == false)
+                {
+                    teed_base();
+                }
+                else // this allows for mount to follow curved handles
+                {
+                    translate([0,0,curve_offset])
+                   {
+                       cut_handle_curve();
+                       mirror([1,0,0])
+                       translate([-0,0,0])
+                            cut_handle_curve();
+                   }
+                }
             }
+            mount_dovetail();
         }
-        if (curved_mount == false)
-        {
-            teed_base();
-        }
-        else // this allows for mount to follow curved handles
-        {
-            translate([0,0,curve_offset])
-           {
-               cut_handle_curve();
-               mirror([1,0,0])
-               translate([-0,0,0])
-                    cut_handle_curve();
-           }
-        }
+        trim_outside();
     }
-    mount_dovetail();
+    
 }
 
 //color("red") drill_post_hole();
@@ -188,6 +194,17 @@ module cut_handle_curve()
          translate([50,0,0])  cube([100,100,200], center=true);
         }
     }
+}
+module trim_outside(vert_handle_d_outside=vert_handle_d_outside)
+{
+    difference()
+    {
+        cylinder(d=vert_handle_d_outside*1.5,
+                            h=100, $fn=120);
+        cylinder(d=vert_handle_d_outside,
+                            h=100, $fn=120);
+    }
+    
 }
 
 // handle_mount();
