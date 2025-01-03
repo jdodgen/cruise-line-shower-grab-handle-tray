@@ -1,8 +1,8 @@
 # Shower grab handle tray
 This is a [openSCAD](https://openscad.org/) design to create an accessory that attaches to the grab handle in the cruise ship shower.
 
-The tray stores things normally on the floor and it also has a place to hang a female razor.   
-The code defines scad lists for mount and tray additions as I add them
+The tray stores things normally on the floor and it also has a loop to hang a razor.   
+There are scad "lists" for mount and tray versions. 
 
 All/most variables are global and should be easy to customize. 
 
