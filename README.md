@@ -27,6 +27,8 @@ ridges to help soap dry
 Holds small/travel bottles of products
 #### [large holder](/src/stl/tray_large.stl)
 This needes a large printer
+#### modular trays [small](src/stl/tray_shortmount.stl) [soap](rc/stl/tray_soapmount.stl) [loop](src/stl/tray_loop.stl)
+can be configured multiple ways
 #### also easy to add other sizes
 
 ## Prototype history/log
@@ -43,18 +45,20 @@ Still a single part.
 Version fits nice. A little leaning due to "curve" elongating the lower clamp.
 This ship has more places for storage and the shower is on a 25mm pole on a 50mm pole.
 
-forth version test.    
+forth version test. 
+now connecting mounts to trays with a dovetail
 two mounts: 20mm and 25x50mm. two trays a "small" and a "soap"   
 mount 20mm with "soap" tray   
 mount 25x50mm with "small" tray   
 All worked fine noticed that trays could be adjusted about 2 degrees up they would level out. Soap dish worked fine but needs ribs for drying.
 
-current version changes (1-JAN-2025).       
+current version (3-JAN-2025).       
 curve elongation problem is fixed by making lower clamp height changeable.    
 Rounded sharp corners on the dovetail.    
 Trays now are tilted up 2 degrees to level them out.    
-Mount now uses less fillament and is more cone shaped.   
-"soap" now has ridges between the slots.    
+Using less fillament, different shapes.   
+"soap" now has ridges between the slots.
+modular versions with dovetails on each end of soap and small/large
 
 
 
