@@ -11,7 +11,7 @@ use <dovetail.scad>;
 //
 // when script is run from commandline override tray_type with: 
 
-tray_type = "loop"; // "short", "long" ,"soap", "test", "soapmount", "loop", "shortmount"
+tray_type = "soapmount"; // "short", "long" ,"soap", "test", "soapmount", "loop", "shortmount"
 make_tray();
 
 /* 
@@ -24,10 +24,10 @@ tray_parms = [
 5    rounded, 
 6    add_loop
 ] */
-// library 
+// library of trays
 soap_tray =        [80, 20,  true,  -2, true,  true,   true];
 loop =             [0, 20,   false,  0, false, false,  true];
-soap_mount_tray =  [90, 20,  true,  -2, true,  false,  false];
+soap_mount_tray =  [90, 20,  true,   0, true,  false,  false];
 short_mount_tray = [130, 40, false, -2, false, false,  false];
 short_tray =       [130, 40, false, -2, false, true,   true];
 long_tray =        [192, 40, false, -2, false, true,   true];
@@ -235,7 +235,7 @@ module tray_dovetail(width=filler_block_x,height=tray_height, depth=filler_block
         {
             dovetail(height=height);
             scale([1,0.7,1]) 
-            cylinder(d=filler_block_x*0.8, h=dove_base, $fn=120);
+            cylinder(d=filler_block_x*0.9, h=dove_base, $fn=120);
         }
     }
     if (tray_lth > 0)
