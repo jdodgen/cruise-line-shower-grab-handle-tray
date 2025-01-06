@@ -10,11 +10,13 @@ There are two scad files one for generating [tray](src/universal_tray.scad)s the
 They are interconnected with a shared [dovetail](src/dovetail.scad). 
 
 ### current mount stl files
-#### [20mm](/src/stl/20mm_mount.stl) grabhandle
+#### [20mm](/src/stl/20mm_mount.stl) grab handle
 As found on Grand Princess and Discovery Princess   
 I expect it is a pretty standard grab handle.
 ####  [25x50mm](/src/stl/25mm_mount.stl) shower handle pole 
 As found on Discovery Princess 
+#### [25mm](/src/stl/25mm_mount.stl) grab handle
+not found on cruise ships yet but sort of standard.
 #### [32.5mm](/src/stl/32mm_mount.stl) curved shower handle pole
 as found on Discovery Princess wheelchair cabins
 #### easy to customize
@@ -28,7 +30,8 @@ Holds small/travel bottles of products
 #### [large holder](/src/stl/tray_large.stl)
 This needes a large printer
 #### modular trays [small](src/stl/tray_shortmount.stl) [soap](rc/stl/tray_soapmount.stl) [loop](src/stl/tray_loop.stl)
-can be configured multiple ways
+That can be plugged together multiple ways
+
 #### also easy to add other sizes
 
 ## Prototype history/log
@@ -52,13 +55,15 @@ mount 20mm with "soap" tray
 mount 25x50mm with "small" tray   
 All worked fine noticed that trays could be adjusted about 2 degrees up they would level out. Soap dish worked fine but needs ribs for drying.
 
-current version (3-JAN-2025).       
+current version (5-JAN-2025).       
 curve elongation problem is fixed by making lower clamp height changeable.    
 Rounded sharp corners on the dovetail.    
 Trays now are tilted up 2 degrees to level them out.    
 Using less fillament, different shapes.   
 "soap" now has ridges between the slots.
-modular versions with dovetails on each end of soap and small/large
+modular versions with dovetails on each end of the trays
+A loop module is the terminator. check out the stl's
+Also a feature to trim the base. 
 
 
 
