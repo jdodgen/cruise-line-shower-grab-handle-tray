@@ -65,6 +65,9 @@ modular versions with dovetails on each end of the trays
 A loop module is the terminator. check out the stl's
 Also a feature to trim the base. 
 
+27-feb-2025
+current version is working good. the small and large trays could be wider up to 40mm more.
+
 
 
 
