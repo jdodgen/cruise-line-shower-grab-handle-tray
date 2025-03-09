@@ -11,7 +11,7 @@ use <dovetail.scad>;
 //
 // when script is run from commandline override tray_type with: 
 
-tray_type = "soapmount"; // "short", "long" ,"soap", "test", "soapmount", "loop", "shortmount"
+tray_type = "loop"; // "short", "long" ,"soap", "test", "soapmount", "loop", "shortmount"
 make_tray();
 
 /* 
@@ -23,14 +23,16 @@ tray_parms = [
 4    nesting, 
 5    rounded, 
 6    add_loop
+7    inside_width
+8    side_mount
 ] */
 // library of trays
-soap_tray =        [80, 20,  true,  -2, true,  true,   true];
-loop =             [0, 20,   false,  0, false, false,  true];
-soap_mount_tray =  [90, 20,  true,   0, true,  false,  false];
-short_mount_tray = [130, 40, false, -2, false, false,  false];
-short_tray =       [130, 40, false, -2, false, true,   true];
-long_tray =        [192, 40, false, -2, false, true,   true];
+soap_tray =        [80, 20,  true,  -2, true,  true,   true, 72];
+loop =             [0, 20,   false,  0, false, false,  true, 0];
+soap_mount_tray =  [90, 20,  true,   0, true,  false,  false,72, true];
+short_mount_tray = [130, 40, false, -2, false, false,  false, 92];
+short_tray =       [130, 40, false, -2, false, true,   true, 72];
+long_tray =        [192, 40, false, -2, false, true,   true, 72];
 // end of library 
 
 tray_parms = 
@@ -49,7 +51,7 @@ tilt_up_angle = tray_parms[3];
 is_nesting = tray_parms[4];
 rounded = tray_parms[5];
 add_loop = tray_parms[6];
-
+inside_width = tray_parms[7];
 
 // common values
 // razer loop
@@ -57,7 +59,7 @@ razer_legs = 20;
 razer_width = 24;
 
 tray_wall = 4;
-inside_width = 72;
+
 
 tray_fillet_radius=15;
 
