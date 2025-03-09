@@ -4,7 +4,7 @@ MIT license, copyright 2024, 2025 Jim Dodgen
 */
 use <fillet.scad>;
 use <dovetail.scad>;
-mount_type = "25x50mm"; // "20mm" "25mm" "32mm" "25x50mm"
+mount_type = "20mm"; // "20mm" "25mm" "32mm" "25x50mm"
 make_mount();
 //full_curve_cutout();  // test curve cutout used to set curved_y_offset
 
