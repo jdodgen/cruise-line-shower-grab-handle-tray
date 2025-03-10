@@ -6,9 +6,9 @@ echo("total bar height",total_height);
 from_wall= 40 -(postd/2);
 big_plate = 70;
 big_plate_thickness = 7;  // measured this but it looks too thick: 15mm;
-nut= 33;
+nut= 32;
 outside_bar_to_nut = 40;
-nut_thickness = from_wall-outside_bar_to_nut; // again measured as 27mm;
+nut_thickness = 26; // again measured as 27mm;
 bar_to_nut = from_wall-nut_thickness;
 echo("calculated bar to nut", bar_to_nut);
 
@@ -17,22 +17,20 @@ echo("measured center_bar_to_nut", center_bar_to_nut());
 
 fudge=0; //-27;
 make_top_curve = false;
-rotate([90,0,90]) make_handle();
-
-module make_handle()
+translate([0,0,postd/2]) rotate([90,0,90]) bar();
+translate([0,-30,0]) make_nut();
+module make_nut()
 {
-    translate([0,0,postd])
-    {
-        bar();
-        *translate ([-from_wall,0,-postd]) 
-            rotate([0,90,0])
-                    cylinder(d= nut, h=nut_thickness, $fn = 15);;
+    
+    difference(){
+      cylinder(d= nut, h=nut_thickness, $fn = 15);
+      cylinder(d= postd-0.05, h=nut_thickness, $fn = 120); 
     }
 }
 //translate([0,postd,0])bar();
 module bar()
 {
-    translate([0,0,postd])
+    
     {
         cylinder(d=postd, h=total_height, $fn = 120);
         color("blue") 

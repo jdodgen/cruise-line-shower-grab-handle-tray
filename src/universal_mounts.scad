@@ -38,7 +38,7 @@ horz_handle_d =            this_one[1];
 curved_mount =             this_one[2];
 base_diameter_adjustment = this_one[3]; 
 bottom_clamp_thickness =   this_one[4];
-clamp_seperation =         this_one[5];
+clamp_separation =         this_one[5];
 dovetail_height_factor =   this_one[6];
 trim =                     this_one[7];
 curved_y_offset =          this_one[8];
@@ -50,7 +50,7 @@ vert_handle_d_outside = horz_handle_d+base_diameter_adjustment;
 lower_dome_height = 6;
 top_clamp_thickness = 8;
 top_clamp_tab_lth = 8;
-total_height = clamp_seperation+lower_dome_height+top_clamp_thickness+bottom_clamp_thickness;
+total_height = clamp_separation+lower_dome_height+top_clamp_thickness+bottom_clamp_thickness;
 center_cutout_height = total_height - top_clamp_thickness-bottom_clamp_thickness;
 height_to_top_clamp = center_cutout_height+bottom_clamp_thickness;
 
