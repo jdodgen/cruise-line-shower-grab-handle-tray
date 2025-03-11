@@ -153,7 +153,7 @@ module make_tray(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_heig
     }
 }
 //make_inner();
-module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_height, wall=tray_wall, support_base_thickness = 1)
+module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_height, wall=tray_wall, support_base_thickness = 0.5)
 {
     difference() // inner
     {
@@ -164,13 +164,10 @@ module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_hei
                             tray_height=tray_height, z_offset=0);
             if (add_loop ==  true)
             {
-                translate([0,(tray_lth/2)+33.5,(tray_lth > 0) 
-                ? tray_height-5 : tray_height/2+2])
+                translate([0, (tray_lth/2)+33.5,
+                    (tray_lth > 0) ? tray_height-5 : tray_height/2+2])
                 {
-                    round_loop(r=3, base=1.8, 
-                        lth=razer_width-7,
-                        legs=razer_legs, curved_end=false);
-                    
+                    make_loop(); 
                 }
                 translate([0,(tray_lth/2)+31,support_base_thickness/2])
                     support_base(support_base_thickness=support_base_thickness);
@@ -179,7 +176,14 @@ module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_hei
              }
              if (side_loops == true)
              {
-                 
+                translate([(tray_width/2)+20, 8,
+                    (tray_lth > 0) ? tray_height-5 : tray_height/2+2])
+                    rotate([0,0,-90]) 
+                        make_loop();
+                translate([(-tray_width/2)-20, 8,
+                    (tray_lth > 0) ? tray_height-5 : tray_height/2+2])
+                    rotate([0,0,90]) 
+                        make_loop();                
              }
         }
         translate([-150,0,tray_height]) // trim top of tray
@@ -190,7 +194,6 @@ module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_hei
             color("red") rough_tray(tray_width=tray_width-wall, lth=tray_lth-wall,
                 tray_height=tray_height-wall, z_offset=wall);
         }
-
         //tray_holes_columns
         if (drain_holes == true)
         {
@@ -198,9 +201,9 @@ module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_hei
         }
     } 
 }
-module support_base()
+module support_base(x=49, y=29, support_base_thickness=1, tray_fillet_radius=tray_fillet_radius)
 {
-    difference(x=49, y=29, support_base_thickness=2,tray_fillet_radius)
+    difference()
     {
          color("purple")
          cube([x,y,support_base_thickness], 
@@ -210,10 +213,16 @@ module support_base()
             fillet(180, tray_fillet_radius,
                 support_base_thickness*2, $fn=80);
          translate([-x/2,-0.5,-support_base_thickness])
-            fillet(-90, tray_fillet_radius
-                *2, $fn=80);
+            fillet(-90, tray_fillet_radius, support_base_thickness*2, $fn=80);
     }
 }
+
+module make_loop()
+{
+    round_loop(r=3, base=1.8, 
+        lth=razer_width-7,
+        legs=razer_legs, curved_end=false); 
+} 
             
 //tray_dovetail();
 module tray_dovetail(width=filler_block_x,height=tray_height, depth=filler_block_y, round_corner_radius=2, , fillet_radius=tray_fillet_radius/4, tilt_x=tilt_up_angle)
