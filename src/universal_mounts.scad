@@ -22,11 +22,11 @@ make_mount();
             ]
 */
 //                              curved         clamp
-// current mounts: 0        1      2     3   4   5    6      7     8
-20mmGrab =      [20+0.8, 20+0.8, true,  27, 35, 22, 1.0, false, -5.3]; // grab bar 20mm x 20mm with curved mount
-25x50mmShower = [25+1,     50+2, false, 23, 30, 28, 0.85, 0.65, 0]; // shower head bar 25mm x 50mm tee mount
-32mmShower =    [32.5+2, 32.5+2, true,  40, 60, 40, 0.8, false, 0]; // curved shower head bar (wheelchair) cabin about 1.25 inches
-25mmGrab=       [25+1,   25+1,   true,  36, 50, 27, 1.0, false, -6]; // pretty common curved metric grab bar about 1 inch
+// current mounts: 0        1      2     3   4   5    6      7     8 9
+20mmGrab =      [20+0.8, 20+0.8, true,  27, 50, 22, 1.0, false, -5.3,  0.3]; // grab bar 20mm x 20mm with curved mount
+25x50mmShower = [25+1,     50+2, false, 23, 30, 28, 0.85, 0.65, 0,    0.4]; // shower head bar 25mm x 50mm tee mount
+32mmShower =    [32.5+2, 32.5+2, true,  40, 60, 40, 0.8, false, 0,    0.4]; // curved shower head bar (wheelchair) cabin about 1.25 inches
+25mmGrab=       [25+1,   25+1,   true,  36, 50, 27, 1.0, false, -6,   0.4]; // pretty common curved metric grab bar about 1 inch
 
 this_one = mount_type ==  "20mm"    ? 20mmGrab :
            mount_type ==  "25x50mm" ? 25x50mmShower :
@@ -42,6 +42,7 @@ clamp_separation =         this_one[5];
 dovetail_height_factor =   this_one[6];
 trim =                     this_one[7];
 curved_y_offset =          this_one[8];
+curve_offset_factor =      this_one[9];
 
 //
 // Other things that are rarely changed
@@ -60,12 +61,12 @@ echo("horz_handle_d", horz_handle_d);
 echo("vert_handle_d_outside", vert_handle_d_outside);
 top_handle_mount_adj = 0.8; //0.8; 
 
-top_d_outside = vert_handle_d*1.4;
+top_d_outside = vert_handle_d*1.6;
 mid_d_outside = top_d_outside*1.2;
 echo("top_d_outside", top_d_outside);
 echo("mid_d_outside", mid_d_outside);
 
-curve_offset = bottom_clamp_thickness*0.4; //*.4;
+curve_offset = bottom_clamp_thickness*curve_offset_factor; //*.4;
 dove_base = 2;  // keeps tray from falling
 dove_mount_offset = 2; // adds some material between horz part
 //
