@@ -4,6 +4,8 @@ MIT license, copyright 2024, 2025 Jim Dodgen
 */
 use <fillet.scad>;
 use <dovetail.scad>;
+
+version = "v 0.8";
 mount_type = "20mm"; // "20mm" "25mm" "32mm" "25x50mm"
 make_mount();
 //full_curve_cutout();  // test curve cutout used to set curved_y_offset
@@ -159,8 +161,11 @@ module teed_base()
 // full_curve_cutout();
 module full_curve_cutout(curved_y_offset=curved_y_offset)
 {
-    cut_handle_curve(curved_y_offset=curved_y_offset);
-    rotate([0,0,180]) cut_handle_curve(curved_y_offset=curved_y_offset);
+    union() {
+        cut_handle_curve(curved_y_offset=curved_y_offset);
+        rotate([0,0,180]) 
+            cut_handle_curve(curved_y_offset=curved_y_offset);
+    }
 }
 
 //cut_handle_curve();
@@ -174,28 +179,30 @@ module cut_handle_curve(curved_y_offset=curved_y_offset)
         {
             union()
             {
-            color("orange")
-            translate([-x, 0, vert_handle_d/4])
-                rotate([-90,90,0])
-                    rotate_extrude(convexity = 10,angle=-90, $fn = 120)
-                        translate([x, 0, 0])
-                        rotate([0,0,-90])
-                        hull()
-                        {
-                            circle(d = vert_handle_d, $fn=120);
-                            translate([0,30,0])
+                color("orange")
+                translate([-x, 0, vert_handle_d/4])
+                    rotate([-90,90,0])
+                        rotate_extrude(convexity = 10,angle=-90, $fn = 120)
+                            translate([x, 0, 0])
+                            rotate([0,0,-90])
+                            hull()
+                            {
                                 circle(d = vert_handle_d, $fn=120);
-                        }
-            color("blue")
-            translate([0,0,-(vert_handle_d+postr)+curved_y_offset]) //-vert_handle_d/2+adjust])
-                rotate([-90,90,90])
-                {
-                    translate([0,0,-250]) cylinder(d=vert_handle_d+0.5, h=500, $fn=120);
-                    translate([0,-(vert_handle_d/2)-0.25,-250])
-                        cube([total_height,vert_handle_d+0.5,500]);
-                }
+                                translate([0,30,0])
+                                    circle(d = vert_handle_d, $fn=120);
+                            }
+                color("blue")
+                translate([0,0,-(vert_handle_d+postr)+curved_y_offset]) //-vert_handle_d/2+adjust])
+                    rotate([-90,90,90])
+                    {
+                        translate([0,0,-250]) cylinder(d=vert_handle_d+0.5, h=500, $fn=120);
+                        translate([0,-(vert_handle_d/2)-0.25,-250])
+                            cube([total_height,vert_handle_d+0.5,500]);
+                    }
             }
-         translate([250,0,-80])  color("green") cube([500,100,200], center=true);
+         translate([251,0,-80])  
+            color("green") 
+                cube([500,100,200], center=true);
         }
     }
 }
@@ -264,5 +271,6 @@ module mount_dovetail()
 {
     translate([0,dove_mount_offset+horz_handle_d/2,0])
     color("blue")
-        dovetail(height=bottom_clamp_thickness*dovetail_height_factor);
+        dovetail(text=version, text_title=mount_type, 
+            height=bottom_clamp_thickness*dovetail_height_factor);
 }

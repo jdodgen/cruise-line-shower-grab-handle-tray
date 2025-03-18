@@ -169,8 +169,8 @@ module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_hei
                 {
                     make_loop(); 
                 }
-                translate([0,(tray_lth/2)+31,support_base_thickness/2])
-                    support_base(support_base_thickness=support_base_thickness);
+                // translate([0,(tray_lth/2)+31,support_base_thickness/2])
+                    // support_base(support_base_thickness=support_base_thickness);
                 
                 
              }
@@ -225,7 +225,7 @@ module make_loop()
 } 
             
 //tray_dovetail();
-module tray_dovetail(width=filler_block_x,height=tray_height, depth=filler_block_y, round_corner_radius=2, , fillet_radius=tray_fillet_radius/4, tilt_x=tilt_up_angle)
+module tray_dovetail(width=filler_block_x,height=tray_height, depth=filler_block_y, round_corner_radius=2, fillet_radius=tray_fillet_radius/4, tilt_x=tilt_up_angle)
 {   
     cutout_height = height*1.5;
     difference()
