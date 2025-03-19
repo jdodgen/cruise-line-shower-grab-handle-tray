@@ -17,14 +17,26 @@ echo("measured center_bar_to_nut", center_bar_to_nut());
 
 fudge=0; //-27;
 make_top_curve = false;
-translate([0,0,postd/2]) rotate([90,0,90]) bar();
-translate([0,-30,0]) make_nut();
-module make_nut()
+difference()
 {
-    
+    translate([0,0,postd/2]) 
+    {
+        rotate([90,0,90]) bar();
+        translate([-postd*2,-50+8,0])
+            rotate([90,0,0])
+                make_nut(hollow=false);
+    }
+    translate([-200,-200,-10])
+                cube([200,200,10]);  // chop nut for simple printing
+}
+
+module make_nut(hollow=true)
+{  
     difference(){
       cylinder(d= nut, h=nut_thickness, $fn = 15);
-      cylinder(d= postd-0.05, h=nut_thickness, $fn = 120); 
+      if (hollow)
+        cylinder(d= postd-0.05, h=nut_thickness,
+            $fn = 120); 
     }
 }
 //translate([0,postd,0])bar();

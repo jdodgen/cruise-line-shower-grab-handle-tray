@@ -3,7 +3,7 @@
 default_min_width = 15;
 default_max_width = default_min_width*1.5;
 default_depth = 15/2;
-default_clearance = 0.5;  // was 1 and loose
+default_clearance = 0.3;  // was 1 and loose
 default_height = 15;
 
 // test examples

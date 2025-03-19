@@ -3,7 +3,7 @@ MIT licence, copyright 2024,2025 Jim Dodgen
 cruise line shower "grab handle" tray
 this is the tray part, universal_tray.scad look at universal_mount.scad for mounts 
 it is designed to hold items that do not fit on shevles in the shower. 
-in it simplist form it is a soap tray with a hanger for a razer
+in its simplest form it is just a razor mount
 */
 use <rounded_loop.scad>;
 use <fillet.scad>;
@@ -11,8 +11,8 @@ use <dovetail.scad>;
 //
 // when script is run from commandline override tray_type with: 
 
-tray_type = "soap"; // "short", "long" ,"", "test", "soapmount", "loop", "shortmount"
-make_tray();
+tray_type = "shortmount"; // "short", "long" ,"", "test", "soapmount", "loop", "shortmount"
+//make_tray();
 
 /* 
 tray_parms = [
@@ -20,17 +20,18 @@ tray_parms = [
 1    height, 
 2    ribs, 
 3    tilt_up_angle, tilt_up_angle is a value in degrees to level the tray a bit in the mount
-4    nesting, 
+4    nesting, can it fit inside inside width
 5    rounded, 
 6    add_loop
-7    inside_width
+7    inside_width  see nesting for shrinkage
 8    side_loops
+9    Y_dovetail
 ] */
 // library of trays
-soap_tray =        [80, 20,  true,  -2, true,  true,   true, 72, true];
+soap_tray =        [90, 20,  true,  -2, true,  false,   true, 72, true];
 loop =             [0, 20,   false,  0, false, false,  true, 0];
-soap_mount_tray =  [90, 20,  true,   0, true,  false,  false,72, true];
-short_mount_tray = [130, 40, false, -2, false, false,  false, 92];
+soap_mount_tray =  [90, 20,  true,   0, false,  false,  false,72, true, true];
+short_mount_tray = [110, 40, false, -2, false, false,  false, 92, false, true];
 short_tray =       [130, 40, false, -2, false, true,   true, 72];
 long_tray =        [192, 40, false, -2, false, true,   true, 72];
 // end of library 
@@ -53,18 +54,19 @@ rounded = tray_parms[5];
 add_loop = tray_parms[6];
 inside_width = tray_parms[7];
 side_loops = tray_parms[8];
+y_dovetail = tray_parms[9];
 
 // common values
 // razer loop
-razer_legs = 20;
+razer_legs = 15;
 razer_width = 24;
 
 tray_wall = 4;
-
+tray_floor = tray_wall/2;
 
 tray_fillet_radius=15;
 
-  // women like this for a razor
+// shring tray width so It fits inside another tray
 echo("is_nesting", is_nesting);
 nesting_width = inside_width-(tray_wall*2);
 
@@ -78,7 +80,8 @@ raw_inside_width = is_nesting ? nesting_width : inside_width;
 tray_width = raw_inside_width + tray_wall*2;
 
 
-module make_tray(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_height, wall=tray_wall)
+
+module make_tray(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_height, wall=tray_wall, tray_floor=tray_floor)
 {
     if (tray_type == "test")
     {
@@ -153,7 +156,7 @@ module make_tray(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_heig
     }
 }
 //make_inner();
-module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_height, wall=tray_wall, support_base_thickness = 0.5)
+module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_height, wall=tray_wall, tray_floor=tray_floor, support_base_thickness = 0.5)
 {
     difference() // inner
     {
@@ -164,8 +167,8 @@ module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_hei
                             tray_height=tray_height, z_offset=0);
             if (add_loop ==  true)
             {
-                translate([0, (tray_lth/2)+33.5,
-                    (tray_lth > 0) ? tray_height-5 : tray_height/2+2])
+                translate([0, (tray_lth/2)+14.5,0])
+                    //(tray_lth > 0) ? tray_height-5 : tray_height/2+2])
                 {
                     make_loop(); 
                 }
@@ -176,12 +179,12 @@ module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_hei
              }
              if (side_loops == true)
              {
-                translate([(tray_width/2)+20, 8,
-                    (tray_lth > 0) ? tray_height-5 : tray_height/2+2])
+                translate([(tray_width/2)+14.5, 0,0])
+                    //(tray_lth > 0) ? tray_height-5 : tray_height/2+2])
                     rotate([0,0,-90]) 
                         make_loop();
-                translate([(-tray_width/2)-20, 8,
-                    (tray_lth > 0) ? tray_height-5 : tray_height/2+2])
+                translate([(-tray_width/2)-14.5, 0,0])
+                    //(tray_lth > 0) ? tray_height-5 : tray_height/2+2])
                     rotate([0,0,90]) 
                         make_loop();                
              }
@@ -192,7 +195,7 @@ module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_hei
         translate([0,0,0])
         {
             color("red") rough_tray(tray_width=tray_width-wall, lth=tray_lth-wall,
-                tray_height=tray_height-wall, z_offset=wall);
+                tray_height=tray_height-tray_floor, z_offset=tray_floor);
         }
         //tray_holes_columns
         if (drain_holes == true)
@@ -219,12 +222,17 @@ module support_base(x=49, y=29, support_base_thickness=1, tray_fillet_radius=tra
 
 module make_loop()
 {
-    round_loop(r=3, base=1.8, 
-        lth=razer_width-7,
-        legs=razer_legs, curved_end=false); 
+    difference()
+    {
+        scale([1,1,2])
+            round_loop(r=3, base=1.6, 
+                        lth=razer_width-7,
+                        legs=razer_legs, curved_end=false); 
+        translate([0,0,-25]) cube([400,400,50],center=true);
+    }
 } 
             
-//tray_dovetail();
+tray_dovetail();
 module tray_dovetail(width=filler_block_x,height=tray_height, depth=filler_block_y, round_corner_radius=2, fillet_radius=tray_fillet_radius/4, tilt_x=tilt_up_angle)
 {   
     cutout_height = height*1.5;
@@ -252,13 +260,19 @@ module tray_dovetail(width=filler_block_x,height=tray_height, depth=filler_block
             }
         }
     }
-    if (!rounded && tray_lth > 10) 
+    if (y_dovetail) 
     {
         translate([width/2,tray_lth+depth,0])
         {
             dovetail(height=height);
-            scale([1,0.7,1]) 
-            cylinder(d=filler_block_x*0.9, h=dove_base, $fn=120);
+            scale([1,0.7,1])
+              difference()
+               { 
+                    cylinder(d=filler_block_x*0.9, h=dove_base, $fn=120);
+                    translate([0, -filler_block_x/2,dove_base/2])
+                    color("red") cube([filler_block_x,filler_block_x,
+                        dove_base], center=true);
+               }
         }
     }
     if (tray_lth > 0)
@@ -301,7 +315,7 @@ module drain_slot_cutter(lth=tray_lth)
         }
     }
 }
-
+//drain_slot_bumps(lth=tray_lth);
 module drain_slot_bumps(lth=tray_lth)
 {
     rows = tray_lth/12 + (rounded ? -1 : -2);
@@ -314,15 +328,15 @@ module drain_slot_bumps(lth=tray_lth)
     //echo("calculated bumps columns", columns);
     for (y =[1:rows])
     {
-        translate([-bump_width/2, -(lth/2.54)+drain_offset*y, bump_d/2])
-        rotate([0,90,0])    
-        difference()
-            {  
-                scale([2,1,1])    
-                    cylinder(d=bump_d, h=bump_width, $fn=60);
-                translate([0, -bump_d/2, 0])
-                    cube([bump_d, bump_d, bump_width]); 
-            }
+        translate([-bump_width/2, -(lth/2.5)+drain_offset*y, tray_floor-0.01])
+          rotate([0,90,0])    
+            difference()
+                {  
+                    scale([1.5,1,1])    
+                        cylinder(d=bump_d, h=bump_width, $fn=60);
+                    translate([0, -bump_d/2, 0])
+                        cube([bump_d, bump_d, bump_width]); 
+                }
     }
 }
 
