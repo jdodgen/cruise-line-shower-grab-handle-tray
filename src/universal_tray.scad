@@ -1,9 +1,9 @@
 /*
-MIT licence, copyright 2024,2025 Jim Dodgen
+MIT license, copyright 2024,2025 Jim Dodgen
 cruise line shower "grab handle" tray
 this is the tray part, universal_tray.scad look at universal_mount.scad for mounts 
-it is designed to hold items that do not fit on shevles in the shower. 
-in its simplest form it is just a razor mount
+it is designed to hold items that do not fit on shelf in the shower. 
+in its simplest form it is just a loop to hang a razor
 */
 use <rounded_loop.scad>;
 use <fillet.scad>;
@@ -11,8 +11,8 @@ use <dovetail.scad>;
 //
 // when script is run from commandline override tray_type with: 
 
-tray_type = "shortmount"; // "short", "long" ,"", "test", "soapmount", "loop", "shortmount"
-//make_tray();
+tray_type = "long"; // "short", "long" ,"", "test", "soapmount", "loop", "shortmount",longmount"
+make_tray();
 
 /* 
 tray_parms = [
@@ -26,20 +26,24 @@ tray_parms = [
 7    inside_width  see nesting for shrinkage
 8    side_loops
 9    Y_dovetail
+10   loop Y adjustment
+11   mount_offset 
 ] */
-// library of trays
-soap_tray =        [90, 20,  true,  -2, true,  false,   true, 72, true];
-loop =             [0, 20,   false,  0, false, false,  true, 0];
+// library of trays 0   1     2      3     4     5       6     7   8      9     10    11
+soap_tray =        [90, 20,  true,  -2, true,  false,   true, 72, true, false, 24.5];
+loop =             [0, 20,   false,  0, false, false,  true, 0, false, false];
 soap_mount_tray =  [90, 20,  true,   0, false,  false,  false,72, true, true];
 short_mount_tray = [110, 40, false, -2, false, false,  false, 92, false, true];
-short_tray =       [130, 40, false, -2, false, true,   true, 72];
-long_tray =        [192, 40, false, -2, false, true,   true, 72];
+short_tray =       [130, 40, false, -2, false, true,   true, 72, false, false];
+long_tray =        [200, 40, false, -2, false, true,   false, 63, true, false, 23.4,  0.5];
+long_mount_tray = [200, 40, false, -2, false, false,  false, 48, false, true];
 // end of library 
 
 tray_parms = 
     tray_type == "soap"        ? soap_tray :
     tray_type == "soapmount"   ? soap_mount_tray :
     tray_type == "shortmount"  ? short_mount_tray :
+    tray_type == "longmount"  ? long_mount_tray :
     tray_type == "short"       ? short_tray :
     tray_type == "loop"        ? loop :
     tray_type == "long"        ? long_tray : false;
@@ -55,6 +59,8 @@ add_loop = tray_parms[6];
 inside_width = tray_parms[7];
 side_loops = tray_parms[8];
 y_dovetail = tray_parms[9];
+loop_y_adj = tray_parms[10];
+mount_offset = tray_parms[11];
 
 // common values
 // razer loop
@@ -167,7 +173,8 @@ module make_inner(tray_width=tray_width, tray_lth=tray_lth, tray_height=tray_hei
                             tray_height=tray_height, z_offset=0);
             if (add_loop ==  true)
             {
-                translate([0, (tray_lth/2)+14.5,0])
+                echo("loop_y_adj", loop_y_adj);
+                translate([0, (tray_lth/2)+loop_y_adj, 0])
                     //(tray_lth > 0) ? tray_height-5 : tray_height/2+2])
                 {
                     make_loop(); 
@@ -232,10 +239,11 @@ module make_loop()
     }
 } 
             
-tray_dovetail();
+// tray_dovetail();
 module tray_dovetail(width=filler_block_x,height=tray_height, depth=filler_block_y, round_corner_radius=2, fillet_radius=tray_fillet_radius/4, tilt_x=tilt_up_angle)
 {   
     cutout_height = height*1.5;
+    translate([0,mount_offset,0])
     difference()
     {
         cube([width,depth,height]);
@@ -262,7 +270,7 @@ module tray_dovetail(width=filler_block_x,height=tray_height, depth=filler_block
     }
     if (y_dovetail) 
     {
-        translate([width/2,tray_lth+depth,0])
+        translate([width/2, tray_lth+depth, 0])
         {
             dovetail(height=height);
             scale([1,0.7,1])
@@ -277,10 +285,10 @@ module tray_dovetail(width=filler_block_x,height=tray_height, depth=filler_block
     }
     if (tray_lth > 0)
     {
-        translate([-fillet_radius,depth-fillet_radius,0])
+        translate([-fillet_radius, depth-fillet_radius+mount_offset, 0])
                 fillet(-180, fillet_radius, tray_height, $fn=80);
 
-        translate([width, depth-fillet_radius, 0])
+        translate([width, depth-fillet_radius+mount_offset, 0])
                         fillet(-90, fillet_radius, tray_height, $fn=80);
     }
     else
