@@ -16,7 +16,7 @@ make_tray();
 
 /* 
 tray_parms = [
-0    lenght, 
+0    length, 
 1    height, 
 2    ribs, 
 3    tilt_up_angle, tilt_up_angle is a value in degrees to level the tray a bit in the mount
