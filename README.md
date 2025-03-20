@@ -37,11 +37,11 @@ That can be plugged together multiple ways
 ## Prototype history/log
 first version test.        
 A single part.
-Handle diameter was estimated. it fit loose and required electrical tape to make it work. took mesurements.
+This was for the curved handle found on all the ships so far. I had to guess on the diameter and made it too big so it was rather sloppy and I had to heat it up to make it work. Learned that it was 20mm not ~1 inch.
 
 second version test.     
-Still a single part.
-Nice fit on the pole but the base is too wide and had to be cut to fit. Razer did not fit. took measurments.
+New 20mm mount that worked but too fat and tall. needs to be smaller. 
+The razor loop needs to be enlarged.
 
 third version test.      
 Still a single part.
@@ -55,18 +55,13 @@ mount 20mm with "soap" tray
 mount 25x50mm with "small" tray   
 All worked fine noticed that trays could be adjusted about 2 degrees up they would level out. Soap dish worked fine but needs ribs for drying.
 
-current version (5-JAN-2025).       
-curve elongation problem is fixed by making lower clamp height changeable.    
-Rounded sharp corners on the dovetail.    
-Trays now are tilted up 2 degrees to level them out.    
-Using less fillament, different shapes.   
-"soap" now has ridges between the slots.
-modular versions with dovetails on each end of the trays
-A loop module is the terminator. check out the stl's
-Also a feature to trim the base. 
+fifth version test.   
+"Tee" post test. the first cabin was assisted care with a different bathroom. It needed a 25mm curved mount.Second cabin tested the "Tee" post mount. It worked ok but a bit large.dovetails need tightening. 
 
-27-feb-2025
-current version is working good. the small and large trays could be wider up to 40mm more.
+sixth version test.   
+Quite saggy, mount needs improvement, also when all is assembled it is a bit too long.  the product tray is too narrow and should be made shorter and wider.  Soap dish needs loops on the sides.   
+
+
 
 
 
