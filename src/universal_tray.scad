@@ -11,7 +11,7 @@ use <dovetail.scad>;
 //
 // when script is run from commandline override tray_type with: 
 
-tray_type = "longmount"; // "short", "long" ,"", "test", "soapmount", "loop", "shortmount",longmount"
+tray_type = "soap"; // "short", "long" ,"", "test", "soapmount", "loop", "shortmount",longmount"
 make_tray();
 
 /* 
@@ -30,9 +30,9 @@ tray_parms = [
 11   mount_offset 
 ] */
 // library of trays 0   1     2      3     4     5       6     7   8      9     10    11
-soap_tray =        [90, 20,  true,  -2, true,  false,   true, 72, true, false, 24.5,   0];
+soap_tray =        [90, 20,  true,  -2, true,  false,   true, 72, false, false, 14.5,   0];
 loop =             [0, 20,   false,  0, false, false,  true, 0, false, false,  30,     0];
-soap_mount_tray =  [90, 20,  true,   0, false,  false,  false,72, true, true,    0,    0];
+soap_mount_tray =  [90, 20,  true,   0, false,  false,  false,72, false, true,    0,    0];
 short_mount_tray = [110, 40, false, -2, false, false,  false, 92, false, true,   0,    0];
 short_tray =       [130, 40, false, -2, false, true,   true, 72, false, false,   0,    0];
 long_tray =        [180, 40, false, -2, false, true,   false, 63, true, false, 23.4,  0.5];
